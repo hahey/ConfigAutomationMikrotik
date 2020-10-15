@@ -1,21 +1,27 @@
-#/usr/env bash
+#!/bin/bash
+
+# set -e
+# set -x
 
 if [[ $# -lt 3 ]]; then
     echo "USAGE: $(basename "$0") STREET FLOOR TEMPLATE" >&2
     exit 1
 fi
 
-ssidlist=(`sudo iwlist wlp1s0 scan| fgrep 'ESSID:"MikroTik' | grep -o '".*"'`)
+ssidlist=( $(sudo iwlist wlp1s0 scan| fgrep 'ESSID:"MikroTik' | grep -o '".*"'|uniq| tr "\n" " ") )
+echo "${#ssidlist[@]}"
+echo "${ssidlist[@]}"
 i=0
-for ssid in "${ssidlist[@]}"; do
+for ssidq in "${ssidlist[@]}"; do
+    [ -f $HOME/.ssh/known_hosts ] && rm $HOME/.ssh/known_hosts
     i=$((i+1))
+    echo "${ssidq}"
+    ssid=$(echo $ssidq | tr -d '"')
+    echo "${ssid}"
     nmcli device wifi connect "${ssid}"
-    sleep 30
     ssh_target=`ip r|grep -oP "via .* dev"|grep -oe '\([0-9.]*\)'`
-    j=$i
-    if [[ ${#j} -lt 2 ]] ; then
-        j="0$i"
-    fi
-    street=$1 floor=$2 idnum=$j envsubst '$street,$floor,$idnum' < "$3" | ssh admin@"${ssh_target}"
-    ssh admin@10.31.69.$2$j <<<$'XXXXXXXXXXXXXXXX\n/system script run ffconfig'
+    echo "${ssh_target}"
+    echo "idnum ${i}"
+    street=$1 floor=$2 idnum=$i envsubst '$street,$floor,$idnum' < "$3" | ssh -oStrictHostKeyChecking=no -l admin "${ssh_target}"
+    ssh -oStrictHostKeyChecking=no -oConnectTimeout=10 -oBatchMode=yes -oServerAliveInterval=10 -l admin "${ssh_target}" '/system script run ffconfig'
 done
