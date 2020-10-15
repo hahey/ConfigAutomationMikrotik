@@ -10,7 +10,12 @@ i=0
 for ssid in "${ssidlist[@]}"; do
     i=$((i+1))
     nmcli device wifi connect "${ssid}"
+    sleep 30
     ssh_target=`ip r|grep -oP "via .* dev"|grep -oe '\([0-9.]*\)'`
-    street=$1 floor=$2 idnum=$i envsubst '$street,$floor,$idnum' < "$3" | ssh admin@"${ssh_target}"
-    ssh admin@"${ssh_target}" <<<$'XXXXXXXXXXXXXXXX\n/system script run ffconfig'
+    j=$i
+    if [[ ${#j} -lt 2 ]] ; then
+        j="0$i"
+    fi
+    street=$1 floor=$2 idnum=$j envsubst '$street,$floor,$idnum' < "$3" | ssh admin@"${ssh_target}"
+    ssh admin@10.31.69.$2$j <<<$'XXXXXXXXXXXXXXXX\n/system script run ffconfig'
 done

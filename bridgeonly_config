@@ -1,7 +1,7 @@
 /system script add name=ffconfig source={
 /user set admin password=XXXXXXXXXXXXXXXXXXXx
 :local strName "$street";
-:local id "$floor0$idnum";
+:local id "$floor$idnum";
 #:local strName "seehausener";
 #:local id "123";
 /system identity set name="$strName-$id";
@@ -23,5 +23,5 @@
 #:if ([/ip address find interface=ether1] != "") do={
 #    /ip address remove [/ip address find interface=ether1]
 #}
-/ip address add address=10.31.69.$floor0$idnum/28 network=10.31.68.1 interface=bridge1
+/ip address add address=10.31.69.$floor$idnum/28 network=10.31.68.1 interface=bridge1
 }
