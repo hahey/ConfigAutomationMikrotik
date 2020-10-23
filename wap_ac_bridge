@@ -1,0 +1,13 @@
+/system script add name=ffconfig source={
+/user set admin password=XXXXXXXXXXXXxx;
+:local strName "$street";
+/system identity set name="$street-$floor$idnum";
+/interface bridge port add interface=ether1 bridge=bridge;
+/interface wireless set wlan1 disabled=no ssid="berlin.freifunk.net" frequency=2437 band=2ghz-b/g/n mode=ap-bridge;
+/interface wireless set wlan2 disabled=no ssid="berlin.freifunk.net" frequency=5680 band=5ghz-a/n/ac mode=ap-bridge;
+/ip dhcp-client remove numbers=0;
+/ip address remove numbers=1;
+/ip address remove numbers=0;
+/ip dhcp-client add disabled=no interface=bridge;
+/ip dhcp-server remove numbers=0;
+}
