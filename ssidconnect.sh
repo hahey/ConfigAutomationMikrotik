@@ -22,6 +22,6 @@ for ssidq in "${ssidlist[@]}"; do
     ssh_target=`ip r|grep -oP "via .* dev"|grep -oe '\([0-9.]*\)'`
     echo "${ssh_target}"
     echo "idnum ${i}"
-    street=$1 floor=$2 idnum=$i envsubst '$street,$floor,$idnum' < "$3" | ssh -oStrictHostKeyChecking=no -l admin "${ssh_target}"
+    { echo; cat ./scripts/$3 | tr "\n" " "; echo; } | street=$1 floor=$2 idnum=$i envsubst '$street,$floor,$idnum' | ssh -oStrictHostKeyChecking=no -l admin "${ssh_target}"
     ssh -oStrictHostKeyChecking=no -oConnectTimeout=10 -oBatchMode=yes -oServerAliveInterval=10 -l admin "${ssh_target}" '/system script run ffconfig'
 done
