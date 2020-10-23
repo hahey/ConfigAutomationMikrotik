@@ -1,11 +1,7 @@
 /system script add name=ffconfig source={
 /user set admin password=XXXXXXXXXXXXXXXXXx
-#:local strName "$street";
-#:local id "$floor$idnum";
-:local strName "senftberger";
-:local id "123"
-# :local macaddr [/interface ethernet get [/interface ethernet find default-name=ether1] mac-address];
-# :local id [:pick $macaddr 0 5];
+:local strName "$street";
+:local id "$floor$idnum";
 /system identity set name="$strName-$id";
 
 :if ([/interface mesh find name=mesh1] = "") do={
@@ -13,13 +9,6 @@
 }
 /interface bridge port add interface=ether1 bridge=bridge
 /interface mesh port add interface=bridge mesh=mesh1
-
-
-# :foreach i in [/interface bridge port find] do={
-#    :if ([:pick [/interface bridge port get $i interface] 0 5] == "wlan") do={
-#        /interface bridge port remove $i
-#    }
-# };
 /interface wireless set wlan1 disabled=no ssid="$strName.freifunk.net" frequency=2437 band=2ghz-b/g/n mode=ap-bridge
 /interface wireless set wlan2 disabled=no ssid="$strName-mesh" frequency=5680 band=5ghz-a/n/ac mode=ap-bridge wds-mode=dynamic-mesh wds-default-bridge=mesh1
 
@@ -43,7 +32,4 @@
 :if ([/interface dhcp-client find interface=wlan2] != "") do={
     /ip dhcp-client remove [/interface dhcp-client find interface=wlan2]
 }
-#:foreach i in [/ip dhcp-client find] do={
-#    /ip dhcp-client remove $i
-#};
 }
