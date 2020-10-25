@@ -1,24 +1,34 @@
-#:local strName "senftberger";
-#:local id "123"
-# :local macaddr [/interface ethernet get [/interface ethernet find default-name=ether1] mac-address];
-# :local id [:pick $macaddr 0 5];
+# example: how to declare variables
+:local strName "senftberger";
+:local id "123"
 
-#/interface wireless set wlan1 disabled=no ssid="berlin.freifunk.net" frequency=2437 band=2ghz-b/g/n mode=ap-bridge
-#:if ([/interface dhcp-client find interface=ether1] != "") do={
-#    /ip dhcp-client remove [/interface dhcp-client find interface=ether1]
-#}
-#:if ([/interface dhcp-client find interface=wlan1] != "") do={
-#    /ip dhcp-client remove [/interface dhcp-client find interface=wlan1]
-#}
-#:if ([/ip address find interface=ether1] != "") do={
-#    /ip address remove [/ip address find interface=ether1]
+# example: how to extract an id by picking first 5 numbers of macaddress
+# one cannot use this to define the identity because of special letters
+:local macaddr [/interface ethernet get [/interface ethernet find default-name=ether1] mac-address];
+:local id [:pick $macaddr 0 5];
+
+# example: how to set wireless interface
+/interface wireless set wlan1 disabled=no ssid="berlin.freifunk.net" frequency=2437 band=2ghz-b/g/n mode=ap-bridge
+
+# example: how to remove the dhcp client by finding the number for the specific interface
+:if ([/ip dhcp-client find interface=ether1] != "") do={
+    /ip dhcp-client remove [/interface dhcp-client find interface=ether1]
+}
+
+# example: similar example as above for ip address
+:if ([/ip address find interface=ether1] != "") do={
+    /ip address remove [/ip address find interface=ether1]
 #
 
-# :foreach i in [/interface bridge port find] do={
-#    :if ([:pick [/interface bridge port get $i interface] 0 5] == "wlan") do={
-#        /interface bridge port remove $i
-#    }
-# };
-#:foreach i in [/ip dhcp-client find] do={
-#    /ip dhcp-client remove $i
-#};
+# example: this example does't work as it is intended because the numbering
+# changes as the each bridge port is kicked out
+:foreach i in [/interface bridge port find] do={
+    :if ([:pick [/interface bridge port get $i interface] 0 5] == "wlan") do={
+        /interface bridge port remove $i
+    }
+};
+
+# example: this also does not work for the same reason
+:foreach i in [/ip dhcp-client find] do={
+    /ip dhcp-client remove $i
+};
