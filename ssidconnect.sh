@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Copyright (C) 2020 Heuna Kim <heynaheyna9@gmail.com>
+# Licensed under GPL v3
+
 # set -e
 # set -x
 

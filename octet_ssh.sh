@@ -1,4 +1,6 @@
 #/usr/env bash
+# Copyright (C) 2020 Heuna Kim <heynaheyna9@gmail.com>
+# Licensed under GPL v3
 
 if [[ $# -lt 4 ]]; then
     echo "USAGE: $(basename "$0") STREET FLOOR TEMPLATE LAST_OCTET [LAST_OCTET ..]" >&2

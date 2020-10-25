@@ -9,3 +9,6 @@
 /ip dhcp-client remove numbers=0;
 :if ([/ip address find interface=wlan1] != "") do={ /ip address remove [/ip address find interface=wlan1]};
 /ip address add address=10.31.68.$idnum$floor network=10.31.68.1 interface=bridge1; /ip dhcp-server remove numbers=0;}
+
+# Copyright (C) 2020 Heuna Kim <heynaheyna9@gmail.com>
+# Licensed under GPL v3

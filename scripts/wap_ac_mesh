@@ -33,3 +33,6 @@
     /ip dhcp-client remove [/interface dhcp-client find interface=wlan2]
 }
 }
+
+# Copyright (C) 2020 Heuna Kim <heynaheyna9@gmail.com>
+# Licensed under GPL v3
