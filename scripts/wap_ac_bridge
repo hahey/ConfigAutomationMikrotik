@@ -11,6 +11,3 @@
 /ip dhcp-client add disabled=no interface=bridge;
 /ip dhcp-server remove numbers=0;
 }
-
-# Copyright (C) 2020 Heuna Kim <heynaheyna9@gmail.com>
-# Licensed under GPL v3
