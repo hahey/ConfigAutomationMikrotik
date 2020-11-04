@@ -1,5 +1,5 @@
 /system script add name=ffconfig source={
-/user set admin password=XXXXXXXXX;
+/user set admin password=$passwd;
 :local strName "$street";
 /system identity set name="$street-$floor$idnum";
 /interface bridge add disabled=no name=bridge1;
