@@ -1,7 +1,5 @@
 ### Usage
 
-The current script is using the default network interface as `wlp1s0`. If you are using another one in your computer please replace the command `sudo iwlist wlp1s0 scan` in `ssidconnect.sh` with your default network interface. (Its automatic recognition is in future todo.) You can figure out your wifi interface by `ip link show`.
-
 First save your password in a file `.auth`.
 ```
    $ echo <your_password> > .auth

@@ -11,7 +11,8 @@ if [[ $# -lt 3 ]]; then
     exit 1
 fi
 
-ssidlist=( $(sudo iwlist wlp1s0 scan| fgrep 'ESSID:"MikroTik' | grep -o '".*"'|uniq| tr "\n" " ") )
+winterface=( $(ip link show | grep -oP '(?<=)wl.*(?=:)'| head -n 1 ) )
+ssidlist=( $(sudo iwlist "${winterface}" scan| fgrep 'ESSID:"MikroTik' | grep -o '".*"'|uniq| tr "\n" " ") )
 echo "${#ssidlist[@]}"
 echo "going through the following ssids to connect:"
 echo "${ssidlist[@]}"
