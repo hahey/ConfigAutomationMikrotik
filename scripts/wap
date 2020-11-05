@@ -5,7 +5,7 @@
 /interface bridge add disabled=no name=bridge1;
 /interface bridge port add interface=ether1 bridge=bridge1;
 /interface bridge port add interface=wlan1 bridge=bridge1;
-/interface wireless set wlan1 disabled=no ssid="berlin.freifunk.net" frequency=2437 band=2ghz-b/g/n mode=ap-bridge;
+/interface wireless set [ find default-name=wlan1 ] disabled=no ssid="berlin.freifunk.net" frequency=2437 band=2ghz-b/g/n country="germany" frequency-mode=regulatory-domain mode=ap-bridge;
 /ip dhcp-client remove numbers=0;
 :if ([/ip address find interface=wlan1] != "") do={ /ip address remove [/ip address find interface=wlan1]};
 /ip address add address=10.31.68.$idnum$floor network=10.31.68.1 interface=bridge1;
