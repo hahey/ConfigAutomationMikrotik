@@ -1,21 +1,26 @@
 ### Usage
 
-The current script is using the default network interface as `wlp1s0`. If you are using another one in your computer please replace the command `sudo iwlist wlp1s0 scan` in `ssidconnect.sh` with your default network interface. (Its automatic recognition is in future todo.) You can figure this by `ip link show`.
+The current script is using the default network interface as `wlp1s0`. If you are using another one in your computer please replace the command `sudo iwlist wlp1s0 scan` in `ssidconnect.sh` with your default network interface. (Its automatic recognition is in future todo.) You can figure out your wifi interface by `ip link show`.
+
+First save your password in a file `.auth`.
+```
+   $ echo <your_password> > .auth
+```
 
 ```
-   $ \.ssidconnect.sh STREET FLOOR TEMPLATE PASSWORD
+   $ \.ssidconnect.sh STREET FLOOR TEMPLATE
 ```
 
 For example,
 
 ```
-   $ \.ssidconnect.sh seehausener 9 wap_ac_bridge_static <your_password>
+   $ \.ssidconnect.sh seehausener 9 wap_ac_bridge_static
 ```
 
 or
 
 ```
-   $ \.ssidconnect.sh seehausener 4 wap <your_password>
+   $ \.ssidconnect.sh seehausener 4 wap
 ```
 
 ### To Dos
