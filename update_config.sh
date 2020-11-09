@@ -2,13 +2,14 @@
 # Copyright (C) 2020 Heuna Kim <heynaheyna9@gmail.com>
 # Licensed under GPL v3
 
-if [[ $# -lt 4 ]]; then
-    echo "USAGE: $(basename "$0") STREET FLOOR TEMPLATE LAST_OCTET [LAST_OCTET ..]" >&2
+if [[ $# -lt 3 ]]; then
+    echo "USAGE: $(basename "$0") TEMPLATE FIRST_THREE_OCTET LAST_OCTET [LAST_OCTET ..]" >&2
     exit 1
 fi
 
-for last_octet in "${@:4}"; do
-    ssh_target="admin@10.31.68.${last_octet}"
-    { echo; cat ./scripts/$3 | tr "\n" " "; echo; } | sshpass -f ./.auth "${ssh_target}"
-    ssh "${ssh_target}" <<<'/system script run ffconfig'
+for last_octet in "${@:3}"; do
+    ssh_target="admin@${2}.${last_octet}"
+    ssh-keygen -R "$ssh_target"
+    { echo; cat ./scripts/$1 | tr "\n" " "; echo; } | sshpass -f ./.auth ssh -oStrictHostKeyChecking=no -l admin "${ssh_target}"
+    ssh -oStrictHostKeyChecking=no -oConnectTimeout=10 -oBatchMode=yes -oServerAliveInterval=10 -l admin "${ssh_target}" '/system script run ffupdate'
 done
