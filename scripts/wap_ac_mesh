@@ -1,38 +1,21 @@
 /system script add name=ffconfig source={
-/user set admin password=XXXXXXXXXXXXXXXXXx
-:local strName "$street";
-:local id "$floor$idnum";
-/system identity set name="$strName-$id";
-
-:if ([/interface mesh find name=mesh1] = "") do={
-    /interface mesh add disabled=no
+/user set admin password=$passwd;
+/system identity set name="$street-$floor$idnum";
+:if ([/interface mesh find name=mesh1] = "") do={ /interface mesh add disabled=no name=mesh1 };
+/interface bridge port add interface=ether1 bridge=bridge;
+:if ([/interface bridge port find interface=wlan1] != "") do={ /interface bridge port remove [/interface bridge port find interface=wlan1]};
+:if ([/interface bridge port find interface=wlan2] != "") do={ /interface bridge port remove [/interface bridge port find interface=wlan2]};
+/interface mesh port add interface=wlan1 mesh=mesh1;
+/interface mesh port add interface=wlan2 mesh=mesh1;
+/interface mesh port add interface=bridge mesh=mesh1;
+/interface wireless set [ find default-name=wlan1 ] disabled=no ssid="berlin.freifunk.net" band=2ghz-b/g/n frequency=2437 country="germany" frequency-mode=regulatory-domain mode=ap-bridge antenna-gain=2;
+/interface wireless set [ find default-name=wlan2 ] disabled=no ssid="freifunk-mesh" band=5ghz-a/n/ac frequency=5500 hide-ssid=yes country="germany" frequency-mode=regulatory-domain mode=ap-bridge antenna-gain=2 wds-mode=dynamic-mesh wds-default-bridge=mesh1;
+/ip dhcp-client add interface=mesh1 disabled=no;
+:if ([/ip dhcp-client find interface=ether1] != "") do={ /ip dhcp-client remove [/ip dhcp-client find interface=ether1]};
+:if ([/ip dhcp-client find interface=bridge] != "") do={ /ip dhcp-client remove [/ip dhcp-client find interface=bridge]};
+/ip dhcp-server remove numbers=0;
+:if ([/ip address find interface=ether1] != "") do={ /ip address remove [/ip address find interface=ether1]};
+:if ([/ip address find interface=wlan1] != "") do={ /ip address remove [/ip address find interface=wlan1]};
+:if ([/ip address find interface=bridge] != "") do={ /ip address remove [/ip address find interface=bridge]};
+/ip firewall filter disable numbers=5;
 }
-/interface bridge port add interface=ether1 bridge=bridge
-/interface mesh port add interface=bridge mesh=mesh1
-/interface wireless set wlan1 disabled=no ssid="$strName.freifunk.net" frequency=2437 band=2ghz-b/g/n mode=ap-bridge
-/interface wireless set wlan2 disabled=no ssid="$strName-mesh" frequency=5680 band=5ghz-a/n/ac mode=ap-bridge wds-mode=dynamic-mesh wds-default-bridge=mesh1
-
-:if ([/interface bridge find interface=wlan1] != "") do={
-    /interface bridge port remove [/interface bridge port find interface=wlan1]
-}
-:if ([/interface bridge find interface=wlan2] != "") do={
-    /interface bridge port remove [/interface bridge port find interface=wlan2]
-}
-/interface mesh port add interface=wlan1 mesh=mesh1
-/interface mesh port add interface=wlan2 mesh=mesh1
-
-/ip dhcp-client add interface=mesh1 disabled=no
-:if ([/interface dhcp-client find interface=ether1] != "") do={
-    /ip dhcp-client remove [/interface dhcp-client find interface=ether1]
-/
-}
-:if ([/interface dhcp-client find interface=wlan1] != "") do={
-    /ip dhcp-client remove [/interface dhcp-client find interface=wlan1]
-}
-:if ([/interface dhcp-client find interface=wlan2] != "") do={
-    /ip dhcp-client remove [/interface dhcp-client find interface=wlan2]
-}
-}
-
-# Copyright (C) 2020 Heuna Kim <heynaheyna9@gmail.com>
-# Licensed under GPL v3
