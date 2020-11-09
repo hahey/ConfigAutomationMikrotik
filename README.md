@@ -27,7 +27,6 @@ or
 
 ### To Dos
 
-- getting the starting idnum as an optional input parameter
 - add requirement installation in readme - sshpass iwlist etc.
 - readable usage document and motivation, usage limits (24 devices in parallel to 10 batches)
 - display full mac address and id pair

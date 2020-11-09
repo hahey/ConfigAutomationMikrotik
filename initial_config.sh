@@ -7,8 +7,13 @@
 # set -x
 
 if [[ $# -lt 3 ]]; then
-    echo "USAGE: $(basename "$0") STREET FLOOR TEMPLATE" >&2
+    echo "USAGE: $(basename "$0") STREET FLOOR TEMPLATE (-i=NUMBER)" >&2
     exit 1
+fi
+if [[ $4 = -i=[0-9]* ]]; then
+    i="${4#*=}"
+else
+    i=0
 fi
 
 winterface=( $(ip link show | grep -oP '(?<=)wl.*(?=:)'| head -n 1 ) )
@@ -16,7 +21,6 @@ ssidlist=( $(sudo iwlist "${winterface}" scan| fgrep 'ESSID:"MikroTik' | grep -o
 echo "${#ssidlist[@]}"
 echo "going through the following ssids to connect:"
 echo "${ssidlist[@]}"
-i=0
 for ssidq in "${ssidlist[@]}"; do
     i=$((i+1))
     ssid=$(echo $ssidq | tr -d '"')
