@@ -36,7 +36,7 @@ starting from `NUMBER` in the `-i` option. If `-i` option is not given, it start
    - `wap_ac_mesh`: the configuration for a wAP ac device with a DHCP client and a HWMP mesh protocol, 2.4Ghz for client connections and 5Ghz for dynamic wds mesh
 
 For the script configured for static IPs the device with the identity `<STREET>-<FLOOR><IDNUM>` will have an IP address ending with `<IDNUM><FLOOR>`.
-This means that you can configure 24 access points (1~24) at once per `FLOOR` for total 10 `FLOOR`s (0~9).
+This means that you can configure 24 access points (numbering between 1 and 24) at once per `FLOOR` for total 10 `FLOOR`s (numbering between 0 and 9).
 `FLOOR` is just the identity of each batch when we are configuring access points per batch - if it has a DHCP client, it doesn't need to be a number.
 
 For example,
