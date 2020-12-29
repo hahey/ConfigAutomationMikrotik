@@ -67,7 +67,14 @@ Run:
 
 This script will iteratively connect to the list of ip addresses with `<FIRST_THREE_OCTET>.<LAST_OCTET>` and run the `TEMPLATE` script in the `script` folder.
 
+For example,
+```
+   $ ./update_config.sh ensure_wireless_bridge 192.168.42 13 122 102
+```
+will apply the script in `ensure_wireless_bridge` to the devices with the ip addresses `192.168.42.13`, `192.168.42.122`, `192.168.42.102`.
+There are two sample update scripts in the `scripts` folder called `ensure_wireless_bridge` and `ensure_wireless_mesh`.
+If you want to write your own script to update, make sure that the script source name is `ffupdate` and then put the script in the `scripts` folder.
+
 ### To Dos
 
 - display full mac address and id pair
-- fix the mesh script so that it can connect from the webfig
