@@ -3,8 +3,8 @@
 :local strName "$street";
 /system identity set name="$street-$floor$idnum";
 /interface bridge port add interface=ether1 bridge=bridge;
-/interface wireless set [ find default-name=wlan1 ] disabled=no ssid="berlin.freifunk.net" band=2ghz-b/g/n country="germany" frequency-mode=regulatory-domain mode=ap-bridge antenna-gain=2;
-/interface wireless set [ find default-name=wlan2 ] disabled=no ssid="berlin-5GHz.freifunk.net" band=5ghz-a/n/ac country="germany" frequency-mode=regulatory-domain mode=ap-bridge antenna-gain=2;
+/interface wireless set [ find default-name=wlan1 ] disabled=no ssid="berlin.freifunk.net" band=2ghz-b/g/n channel-width=20mhz country="germany" frequency-mode=regulatory-domain mode=ap-bridge antenna-gain=2;
+/interface wireless set [ find default-name=wlan2 ] disabled=no ssid="berlin-5GHz.freifunk.net" band=5ghz-a/n/ac channel-width=20/40mhz-XX country="germany" frequency-mode=regulatory-domain mode=ap-bridge antenna-gain=2;
 /ip dhcp-client remove numbers=0;
 /ip address remove numbers=1;
 /ip address remove numbers=0;
