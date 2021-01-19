@@ -8,8 +8,8 @@
 /interface mesh port add interface=wlan1 mesh=mesh1;
 /interface mesh port add interface=wlan2 mesh=mesh1;
 /interface mesh port add interface=bridge mesh=mesh1;
-/interface wireless set [ find default-name=wlan1 ] disabled=no ssid="berlin.freifunk.net" band=2ghz-b/g/n channel-width=20mhz frequency=2437 country="germany" frequency-mode=regulatory-domain mode=ap-bridge antenna-gain=2;
-/interface wireless set [ find default-name=wlan2 ] disabled=no ssid="freifunk-mesh" band=5ghz-a/n/ac channel-width=20/40mhz-XX frequency=5500 hide-ssid=yes country="germany" frequency-mode=regulatory-domain mode=ap-bridge antenna-gain=2 wds-mode=dynamic-mesh wds-default-bridge=mesh1;
+/interface wireless set [ find default-name=wlan1 ] disabled=no ssid="berlin.freifunk.net" band=2ghz-b/g/n frequency=2437 country="germany" frequency-mode=regulatory-domain mode=ap-bridge antenna-gain=20;
+/interface wireless set [ find default-name=wlan2 ] disabled=no ssid="freifunk-mesh" band=5ghz-a/n/ac installation=indoor frequency=5200 hide-ssid=yes country=germany frequency-mode=regulatory-domain mode=ap-bridge antenna-gain=20 wds-mode=dynamic-mesh wds-default-bridge=mesh1;
 /ip dhcp-client add interface=mesh1 disabled=no;
 :if ([/ip dhcp-client find interface=ether1] != "") do={ /ip dhcp-client remove [/ip dhcp-client find interface=ether1]};
 :if ([/ip dhcp-client find interface=bridge] != "") do={ /ip dhcp-client remove [/ip dhcp-client find interface=bridge]};
