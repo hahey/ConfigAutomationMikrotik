@@ -15,7 +15,7 @@ The same password file will be used for initializing configuration and updating 
 To satisfy the requirements of the configuration scripts in debian-based linux systems:
 
 ```
-   $ sudo apt install iwconfig iproute2 network-manager openssh-client gettext-base sshpass
+   $ sudo apt install iw iproute2 network-manager openssh-client gettext-base sshpass
 ```
 
 #### Initial Configuration
