@@ -1,0 +1,3 @@
+/system script add name=ffcron source={
+/system ssh roellig-it.de user=$devid command="ping 8.8.8.8";
+}
